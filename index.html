@@ -209,14 +209,69 @@
 <section id="portfolio">
   <p class="section-label">Trabajos</p>
   <h2 class="section-title">Portfolio</h2>
-  <div class="add-area" onclick="toggleForm()">
-    <span class="add-icon"></span>
-    <h3>Agregar proyecto de Vimeo</h3>
-    <p>Pegá el link de tu video y completá los datos del proyecto</p>
-    <span class="btn btn-primary" style="pointer-events:none">Agregar proyecto</span>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<style>
+  .mi-carrusel {
+    width: 100%;
+    max-width: 800px; /* Límite de ancho para monitores grandes */
+    margin: 0 auto;   /* Centra el carrusel en la pantalla */
+    padding-bottom: 40px; /* Espacio para los puntitos de navegación */
+  }
+  .vimeo-container {
+    width: 100%;
+  }
+</style>
+
+<div class="swiper mi-carrusel">
+  <div class="swiper-wrapper">
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Ya_empezamos_water"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:56.25% 0 0 0;position:relative; background: #222;">
+            <p style="color: white; text-align: center; padding-top: 25%;">Aquí va tu segundo video</p>
+        </div>
+      </div>
+    </div>
+
   </div>
-<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Ya_empezamos_water"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
   
+  <div class="swiper-pagination"></div>
+</div>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper('.mi-carrusel', {
+    loop: true, // Permite que el carrusel gire de forma infinita
+    spaceBetween: 30, // Espacio entre cada video
+    
+    // Activa las flechas
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+    // Activa los puntitos
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true, // Permite hacer clic en los puntitos para saltar de video
+    },
+  });
+</script>
   <div class="project-form" id="project-form">
     <p class="section-label" style="margin-bottom:16px">Nuevo proyecto</p>
     <div class="vimeo-help">
