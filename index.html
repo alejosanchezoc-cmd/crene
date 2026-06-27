@@ -214,12 +214,17 @@
 <style>
   .mi-carrusel {
     width: 100%;
-    max-width: 800px; /* Límite de ancho para monitores grandes */
-    margin: 0 auto;   /* Centra el carrusel en la pantalla */
-    padding-bottom: 40px; /* Espacio para los puntitos de navegación */
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 50px; /* Espacio extra para los puntitos */
+  }
+  .swiper-wrapper {
+    align-items: center; /* Centra verticalmente videos horizontales y verticales */
   }
   .vimeo-container {
     width: 100%;
+    /* Si los videos verticales se ven demasiado gigantes en PC, puedes descomentar la siguiente línea: */
+    /* max-width: 450px; margin: 0 auto; */ 
   }
 </style>
 
@@ -228,16 +233,48 @@
 
     <div class="swiper-slide">
       <div class="vimeo-container">
-        <div style="padding:56.25% 0 0 0;position:relative;">
-          <iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Ya_empezamos_water"></iframe>
+        <div style="padding:177.78% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980903?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Raspy"></iframe>
         </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-container">
-        <div style="padding:56.25% 0 0 0;position:relative; background: #222;">
-            <p style="color: white; text-align: center; padding-top: 25%;">Aquí va tu segundo video</p>
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980879?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Comp 1_1"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980906?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Motion Graphics"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980876?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Comp 1 2"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:177.78% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980877?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="one click finish"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide">
+      <div class="vimeo-container">
+        <div style="padding:56.25% 0 0 0;position:relative;">
+          <iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Ya_empezamos_water"></iframe>
         </div>
       </div>
     </div>
@@ -256,78 +293,19 @@
 
 <script>
   const swiper = new Swiper('.mi-carrusel', {
-    loop: true, // Permite que el carrusel gire de forma infinita
-    spaceBetween: 30, // Espacio entre cada video
-    
-    // Activa las flechas
+    loop: true,
+    spaceBetween: 30,
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
-    
-    // Activa los puntitos
     pagination: {
       el: '.swiper-pagination',
-      clickable: true, // Permite hacer clic en los puntitos para saltar de video
+      clickable: true,
     },
   });
 </script>
-  <div class="project-form" id="project-form">
-    <p class="section-label" style="margin-bottom:16px">Nuevo proyecto</p>
-    <div class="vimeo-help">
-      <strong>Cómo conseguir el link de Vimeo:</strong><br>
-      1. Subí tu video en vimeo.com, abrilo y copiá la URL del navegador.<br>
-      Ejemplo: <code>https://vimeo.com/123456789</code><br>
-      2. Para que solo se vea en tu portfolio: Settings del video &rarr; Privacy &rarr; "Only people with the private link".
-    </div>
-    <div class="form-grid">
-      <div class="form-field full">
-        <label>Link de Vimeo</label>
-        <input type="text" id="f-url" placeholder="https://vimeo.com/123456789" oninput="previewVimeo()" />
-        <div class="vimeo-embed-preview" id="vimeo-preview">
-          <iframe id="vimeo-iframe" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-      <div class="form-field">
-        <label>Nombre del proyecto</label>
-        <input type="text" id="f-title" placeholder="Ej: Spot corporativo Empresa X" />
-      </div>
-      <div class="form-field">
-        <label>Herramienta</label>
-        <select id="f-tool">
-          <option value="After Effects">After Effects</option>
-          <option value="Premiere Pro">Premiere Pro</option>
-          <option value="Ambas">After Effects + Premiere</option>
-          <option value="Motion">Motion Graphics</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label>Año</label>
-        <input type="text" id="f-year" placeholder="2024" maxlength="4" />
-      </div>
-      <div class="form-field">
-        <label>Cliente / Proyecto</label>
-        <input type="text" id="f-client" placeholder="Ej: Agencia XYZ" />
-      </div>
-      <div class="form-field full">
-        <label>Descripción breve</label>
-        <textarea id="f-desc" placeholder="Contá qué hiciste: motion, edición, colorización..."></textarea>
-      </div>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-cancel" onclick="cancelForm()">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveProject()">Guardar proyecto</button>
-    </div>
-  </div>
 
-  <div class="projects-grid" id="projects-grid">
-    <div class="empty-state">
-      <span class="big-icon">🎬</span>
-      <h3>Tu portfolio te espera</h3>
-      <p>Agregá tu primer proyecto con un link de Vimeo.</p>
-    </div>
-  </div>
-</section>
 
 <section id="skills" class="skills-section">
   <p class="section-label">Herramientas</p>
