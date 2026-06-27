@@ -214,42 +214,79 @@
 <style>
   body {
     background-color: #111; 
+    font-family: Arial, sans-serif; /* Puedes cambiarla por la fuente de tu web */
   }
   
   .mi-carrusel {
     width: 100%;
     padding-top: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 70px; /* Un poco más de espacio abajo para la info */
   }
 
+  /* LA TARJETA COMPLETA (Video + Texto) */
   .swiper-slide {
     width: 80%; 
     max-width: 600px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Apila el video arriba y el texto abajo */
+    background-color: #1a1a1a; /* Color de fondo de la tarjeta */
+    border-radius: 12px; /* Bordes redondeados para toda la tarjeta */
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
     transition: transform 0.3s ease; 
   }
 
-  /* AQUÍ ESTÁ LA MAGIA PARA UNIFICAR TAMAÑOS */
   .vimeo-wrapper {
     position: relative;
     width: 100%;
-    /* aspect-ratio fuerza a todas las cajas a tener el mismo formato apaisado (16:9) */
     aspect-ratio: 16 / 9; 
     background-color: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
   }
 
-  /* Esto asegura que el iframe siempre llene la caja uniforme que creamos arriba */
   .vimeo-wrapper iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  /* ESTILOS PARA LA DESCRIPCIÓN */
+  .video-info {
+    padding: 20px;
+    color: #fff;
+    text-align: left;
+  }
+
+  .video-title {
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .video-details {
+    margin: 0 0 15px 0;
+    font-size: 0.95rem;
+    color: #cccccc;
+    line-height: 1.5;
+  }
+
+  /* Estilo para las etiquetas de los programas */
+  .software-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background-color: #333333;
+    color: #eeeeee;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
   }
 
   /* Estilos de navegación */
@@ -267,37 +304,85 @@
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980903?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Raspy"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980903?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Raspy"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Redes Sociales</h3>
+        <p class="video-details"><strong>Cliente:</strong>TTV.RaspyQueen<br><strong>Descripción:</strong> Animación 3D y motion graphics para informar que se encuentra en VIVO en Twitch por redes sociales, ej: TikTok, Instagram.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+          <span class="tag">Motion Graphics</span>
+          <span class="tag">3D</span>
+        </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980879?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Comp 1_1"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980879?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Comp 1_1"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Transformación de logo</h3>
+        <p class="video-details"><strong>Cliente:</strong> Hardlock<br><strong>Descripción:</strong> Este es una transformacion del logo de Hardlock, pasando de HK al logo completo.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+        </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980906?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Motion Graphics"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980906?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Motion Graphics"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Presentación APP</h3>
+        <p class="video-details"><strong>Cliente:</strong> Hardlock<br><strong>Descripción:</strong>Presentación de la aplicación móvil para una empresa.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+          <span class="tag">3D</span>
+          <span class="tag">Motion Graphics</span>
+        </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980876?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Comp 1 2"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980876?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Comp 1 2"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Ya Empezamos</h3>
+        <p class="video-details"><strong>Cliente:</strong> Proyecto Propio<br><strong>Descripción:</strong> Es una overlay para Twitch.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+        </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980877?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="one click finish"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980877?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="one click finish"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">One Click</h3>
+        <p class="video-details"><strong>Cliente:</strong> Hardlock<br><strong>Descripción:</strong> Formato vertical para TikTok/Reels mostrando la interfaz de usuario.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+          <span class="tag">Motion graphics</span>
+        </div>
       </div>
     </div>
 
     <div class="swiper-slide">
       <div class="vimeo-wrapper">
-        <iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Ya_empezamos_water"></iframe>
+        <iframe src="https://player.vimeo.com/video/1204980905?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" title="Ya_empezamos_water"></iframe>
+      </div>
+      <div class="video-info">
+        <h3 class="video-title">Ponyo</h3>
+        <p class="video-details"><strong>Cliente:</strong>TTV. lulaxcoloress<br><strong>Descripción:</strong> Es un overlay de 'Ya empezamos' con tematica de Ponyo, un poco de animación al fondo, texto y aparicion de personajes.</p>
+        <div class="software-tags">
+          <span class="tag">After Effects</span>
+          <span class="tag">Plugins</span>
+        </div>
       </div>
     </div>
 
@@ -321,9 +406,9 @@
     loop: true,
     
     coverflowEffect: {
-      rotate: 30,
+      rotate: 20,              // Reduje un poco la rotación para que el texto sea más fácil de leer en perspectiva
       stretch: 0,
-      depth: 250,
+      depth: 200,
       modifier: 1,
       slideShadows: true,
     },
@@ -338,7 +423,6 @@
     },
   });
 </script>
-
 
 <section id="skills" class="skills-section">
   <p class="section-label">Herramientas</p>
