@@ -212,19 +212,44 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <style>
+  body {
+    /* Opcional: un fondo oscuro hace que el efecto 3D y los videos resalten mucho más */
+    background-color: #111; 
+  }
+  
   .mi-carrusel {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding-bottom: 50px; /* Espacio extra para los puntitos */
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
-  .swiper-wrapper {
-    align-items: center; /* Centra verticalmente videos horizontales y verticales */
+
+  .swiper-slide {
+    /* Es crucial darle un ancho específico a los slides para que se vean los de atrás */
+    width: 80%; 
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Efecto de transición suave al cambiar de slide */
+    transition: transform 0.3s ease; 
   }
+
   .vimeo-container {
     width: 100%;
-    /* Si los videos verticales se ven demasiado gigantes en PC, puedes descomentar la siguiente línea: */
-    /* max-width: 450px; margin: 0 auto; */ 
+    /* Añadimos sombra y bordes redondeados para dar sensación de pantallas físicas */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000; /* Fondo negro por si el video tarda en cargar */
+  }
+
+  /* Para que las flechas y puntos de navegación se vean bien en fondo oscuro */
+  .swiper-button-next, .swiper-button-prev {
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .swiper-pagination-bullet {
+    background: #fff;
   }
 </style>
 
@@ -288,13 +313,25 @@
 </div>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
   const swiper = new Swiper('.mi-carrusel', {
-    loop: true,
-    spaceBetween: 30,
+    effect: 'coverflow',       // ¡Aquí está la magia del 3D!
+    grabCursor: true,          // Cambia el cursor a una "mano" para arrastrar
+    centeredSlides: true,      // Mantiene el video activo siempre en el centro
+    slidesPerView: 'auto',     // Permite ver los bordes de los videos adyacentes
+    loop: true,                // Carrusel infinito
+    
+    // Configuración específica de la perspectiva 3D
+    coverflowEffect: {
+      rotate: 30,              // Grados de rotación de los videos laterales (prueba cambiarlo a 50 o 0)
+      stretch: 0,              // Espacio entre los videos
+      depth: 250,              // Qué tan "al fondo" se van los videos inactivos
+      modifier: 1,             // Multiplicador del efecto
+      slideShadows: true,      // Swiper añade sombras automáticas a los videos de atrás
+    },
+    
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
