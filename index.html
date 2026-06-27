@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio · Motion & Edición</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0D0D0F; --surface: #141416; --surface2: #1C1C20;
+      --border: rgba(255,255,255,0.07); --accent: #9B7FFF; --accent2: #C4B5FD;
+      --text: #F0EFF8; --muted: #7A798A; --ae: #9999FF; --pr: #E890E8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; background: rgba(13,13,15,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.04em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(155,127,255,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-40%, -55%); pointer-events: none; }
+    .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 20px; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.04; letter-spacing: -0.02em; max-width: 800px; margin-bottom: 28px; }
+    .hero h1 em { font-style: normal; color: var(--accent2); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 460px; line-height: 1.65; margin-bottom: 44px; }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s; text-decoration: none; border: none; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(155,127,255,0.3); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent2); }
+    .timeline-divider { padding: 0 48px; margin: 20px 0 60px; }
+    .timeline-track { position: relative; height: 36px; background: var(--surface); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .timeline-ruler { position: absolute; top: 0; left: 0; right: 0; height: 100%; display: flex; }
+    .tl-segment { flex: 1; border-right: 1px solid var(--border); position: relative; }
+    .tl-segment::before { content: attr(data-time); position: absolute; top: 4px; left: 4px; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.06em; font-family: 'Syne', sans-serif; }
+    .tl-clip { position: absolute; top: 8px; height: 20px; border-radius: 3px; display: flex; align-items: center; padding: 0 8px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; font-family: 'Syne', sans-serif; }
+    .tl-clip-ae { background: rgba(153,153,255,0.22); color: var(--ae); border: 1px solid rgba(153,153,255,0.3); }
+    .tl-clip-pr { background: rgba(232,144,232,0.18); color: var(--pr); border: 1px solid rgba(232,144,232,0.25); }
+    .tl-clip-v  { background: rgba(155,127,255,0.18); color: var(--accent2); border: 1px solid rgba(155,127,255,0.25); }
+    .tl-playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); left: 0; animation: playhead 6s linear infinite; }
+    .tl-playhead::before { content: ''; position: absolute; top: 0; left: -4px; width: 10px; height: 10px; background: var(--accent); clip-path: polygon(50% 100%, 0 0, 100% 0); }
+    @keyframes playhead { 0% { left: 0%; } 100% { left: 100%; } }
+    section { padding: 80px 48px; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 48px; line-height: 1.2; }
+    .add-area { border: 1.5px dashed rgba(155,127,255,0.35); border-radius: 16px; padding: 36px 48px; text-align: center; cursor: pointer; transition: all 0.25s; background: rgba(155,127,255,0.04); margin-bottom: 40px; }
+    .add-area:hover { border-color: var(--accent); background: rgba(155,127,255,0.09); }
+    .add-area h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .add-area p { font-size: 0.82rem; color: var(--muted); margin-bottom: 20px; }
+    .add-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .vimeo-help { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+    .vimeo-help strong { color: var(--accent2); }
+    .vimeo-help code { background: rgba(155,127,255,0.12); color: var(--accent2); padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: 0.76rem; }
+    .project-form { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 40px; display: none; }
+    .project-form.visible { display: block; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    .form-field input, .form-field textarea, .form-field select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+    .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--accent); }
+    .form-field textarea { resize: vertical; min-height: 80px; }
+    .form-field select option { background: var(--surface2); }
+    .vimeo-embed-preview { width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #000; display: none; margin-top: 12px; }
+    .vimeo-embed-preview iframe { width: 100%; height: 100%; border: none; display: block; }
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+    .btn-cancel { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-cancel:hover { border-color: var(--muted); color: var(--text); }
+    .tag { padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; }
+    .tag-ae { background: rgba(153,153,255,0.15); color: var(--ae); }
+    .tag-pr { background: rgba(232,144,232,0.15); color: var(--pr); }
+    .tag-v  { background: rgba(155,127,255,0.15); color: var(--accent2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.5); border-color: rgba(155,127,255,0.3); }
+    .card-media { aspect-ratio: 16/9; background: var(--surface2); position: relative; overflow: hidden; }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; opacity: 0.25; }
+    .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,15,0.85) 0%, transparent 55%); opacity: 0; transition: opacity 0.25s; display: flex; align-items: center; justify-content: center; }
+    .project-card:hover .card-overlay { opacity: 1; }
+    .play-icon { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; transform: scale(0.8); transition: transform 0.2s; }
+    .project-card:hover .play-icon { transform: scale(1); }
+    .card-type-badge { position: absolute; top: 10px; right: 10px; padding: 3px 10px; border-radius: 20px; font-size: 0.64rem; font-weight: 600; letter-spacing: 0.06em; }
+    .card-info { padding: 18px 20px; }
+    .card-info h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+    .card-info p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+    .card-meta { display: flex; justify-content: space-between; align-items: center; }
+    .card-tool { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; }
+    .card-year { font-size: 0.7rem; color: var(--muted); }
+    .card-delete { position: absolute; top: 10px; left: 10px; width: 28px; height: 28px; border-radius: 6px; background: rgba(13,13,15,0.8); border: 1px solid var(--border); color: var(--muted); cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 0.75rem; transition: all 0.15s; }
+    .project-card:hover .card-delete { display: flex; }
+    .card-delete:hover { background: #e53e3e; color: #fff; border-color: #e53e3e; }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 64px 32px; }
+    .empty-state .big-icon { font-size: 3.5rem; margin-bottom: 16px; opacity: 0.3; display: block; }
+    .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 1rem; margin-bottom: 8px; color: var(--muted); }
+    .empty-state p { font-size: 0.82rem; color: var(--muted); opacity: 0.6; }
+    .skills-section { background: var(--surface); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .skill-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px 20px; transition: border-color 0.2s; }
+    .skill-card:hover { border-color: rgba(155,127,255,0.4); }
+    .skill-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+    .skill-card h4 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .skill-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-text p { font-size: 0.95rem; line-height: 1.75; color: var(--muted); margin-bottom: 16px; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .stat-number { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent2); display: block; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); }
+    .contact-box { max-width: 560px; margin: 0 auto; text-align: center; }
+    .contact-box p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 32px; }
+    .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .contact-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border); color: var(--text); background: var(--surface); transition: all 0.2s; }
+    .contact-btn:hover { border-color: var(--accent); color: var(--accent2); transform: translateY(-2px); }
+    footer { padding: 28px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.25s; backdrop-filter: blur(8px); }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; max-width: 860px; width: 100%; overflow: hidden; transform: scale(0.95); transition: transform 0.25s; }
+    .modal-overlay.open .modal { transform: scale(1); }
+    .modal-media { aspect-ratio: 16/9; background: #000; width: 100%; }
+    .modal-media iframe { width: 100%; height: 100%; border: none; display: block; }
+    .modal-body { padding: 24px 28px; }
+    .modal-meta { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .modal-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; }
+    .modal-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .modal-close { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); cursor: pointer; padding: 6px 12px; font-size: 0.8rem; transition: all 0.15s; white-space: nowrap; }
+    .modal-close:hover { color: var(--text); border-color: var(--muted); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; } .nav-links { display: none; }
+      .hero, section { padding: 80px 20px; } .hero { padding-top: 110px; }
+      .timeline-divider { padding: 0 20px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .add-area { padding: 28px 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .tl-playhead { animation: none; left: 40%; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">&#9654; Crene😶‍🌫️
+  </a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#skills">Herramientas</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-eyebrow">Motion Design · Video Editing</p>
+  <h1>Haciendo que cada frame<br><em>cuente una historia</em></h1>
+  <p class="hero-sub">After Effects, Premiere Pro y la mirada que convierte cada frame en intención.</p>
+  <div class="hero-cta">
+    <a href="#portfolio" class="btn btn-primary">Ver portfolio</a>
+    <a href="#contacto" class="btn btn-ghost">Trabajemos juntos</a>
+  </div>
+</section>
+
+<div class="timeline-divider">
+  <div class="timeline-track">
+    <div class="timeline-ruler">
+      <div class="tl-segment" data-time="00:00"></div>
+      <div class="tl-segment" data-time="00:05"></div>
+      <div class="tl-segment" data-time="00:10"></div>
+      <div class="tl-segment" data-time="00:15"></div>
+      <div class="tl-segment" data-time="00:20"></div>
+      <div class="tl-segment" data-time="00:25"></div>
+      <div class="tl-segment" data-time="00:30"></div>
+      <div class="tl-segment" data-time="00:35"></div>
+    </div>
+    <div class="tl-clip tl-clip-ae" style="left:2%;width:95%">AE — Motion</div>
+    <div class="tl-playhead"></div>
+  </div>
+</div>
+<div class="timeline-divider">
+  <div class="timeline-track">
+    <div class="timeline-ruler">
+      <div class="tl-segment" data-time="00:00"></div>
+      <div class="tl-segment" data-time="00:05"></div>
+      <div class="tl-segment" data-time="00:10"></div>
+      <div class="tl-segment" data-time="00:15"></div>
+      <div class="tl-segment" data-time="00:20"></div>
+      <div class="tl-segment" data-time="00:25"></div>
+      <div class="tl-segment" data-time="00:30"></div>
+      <div class="tl-segment" data-time="00:35"></div>
+    </div>
+    <div class="tl-clip tl-clip-pr" style="left:1%;width:95%">PR — Edición</div>  
+    <div class="tl-playhead"></div>
+  </div>
+</div>
+
+<section id="portfolio">
+  <p class="section-label">Trabajos</p>
+  <h2 class="section-title">Portfolio</h2>
+  <div class="add-area" onclick="toggleForm()">
+    <span class="add-icon"></span>
+    <h3>Agregar proyecto de Vimeo</h3>
+    <p>Pegá el link de tu video y completá los datos del proyecto</p>
+    <span class="btn btn-primary" style="pointer-events:none">Agregar proyecto</span>
+  </div>
+
+  <div class="project-form" id="project-form">
+    <p class="section-label" style="margin-bottom:16px">Nuevo proyecto</p>
+    <div class="vimeo-help">
+      <strong>Cómo conseguir el link de Vimeo:</strong><br>
+      1. Subí tu video en vimeo.com, abrilo y copiá la URL del navegador.<br>
+      Ejemplo: <code>https://vimeo.com/123456789</code><br>
+      2. Para que solo se vea en tu portfolio: Settings del video &rarr; Privacy &rarr; "Only people with the private link".
+    </div>
+    <div class="form-grid">
+      <div class="form-field full">
+        <label>Link de Vimeo</label>
+        <input type="text" id="f-url" placeholder="https://vimeo.com/123456789" oninput="previewVimeo()" />
+        <div class="vimeo-embed-preview" id="vimeo-preview">
+          <iframe id="vimeo-iframe" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Nombre del proyecto</label>
+        <input type="text" id="f-title" placeholder="Ej: Spot corporativo Empresa X" />
+      </div>
+      <div class="form-field">
+        <label>Herramienta</label>
+        <select id="f-tool">
+          <option value="After Effects">After Effects</option>
+          <option value="Premiere Pro">Premiere Pro</option>
+          <option value="Ambas">After Effects + Premiere</option>
+          <option value="Motion">Motion Graphics</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Año</label>
+        <input type="text" id="f-year" placeholder="2024" maxlength="4" />
+      </div>
+      <div class="form-field">
+        <label>Cliente / Proyecto</label>
+        <input type="text" id="f-client" placeholder="Ej: Agencia XYZ" />
+      </div>
+      <div class="form-field full">
+        <label>Descripción breve</label>
+        <textarea id="f-desc" placeholder="Contá qué hiciste: motion, edición, colorización..."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-cancel" onclick="cancelForm()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveProject()">Guardar proyecto</button>
+    </div>
+  </div>
+
+  <div class="projects-grid" id="projects-grid">
+    <div class="empty-state">
+      <span class="big-icon">🎬</span>
+      <h3>Tu portfolio te espera</h3>
+      <p>Agregá tu primer proyecto con un link de Vimeo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="skills-section">
+  <p class="section-label">Herramientas</p>
+  <h2 class="section-title">Con qué trabajo</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><span class="skill-icon">🎞️</span><h4 style="color:var(--ae)">After Effects</h4><p>Motion graphics, animaciones, efectos visuales, compositing y títulos.</p></div>
+    <div class="skill-card"><span class="skill-icon">✂️</span><h4 style="color:var(--pr)">Premiere Pro</h4><p>Edición de video, corte, ritmo narrativo, mezcla de audio y entrega final.</p></div>
+    <div class="skill-card"><span class="skill-icon">🎨</span><h4 style="color:var(--accent2)">Color Grading</h4><p>Colorización con Lumetri Color para darle identidad visual a cada pieza.</p></div>
+    <div class="skill-card"><span class="skill-icon">🔊</span><h4>Sound Design</h4><p>Selección y mezcla de música y efectos de sonido para reforzar la narrativa.</p></div>
+    <div class="skill-card"><span class="skill-icon">📐</span><h4>Motion Graphics</h4><p>Diseño en movimiento: logos animados, openers, infografías y overlays.</p></div>
+    <div class="skill-card"><span class="skill-icon">📦</span><h4>Entrega</h4><p>Exportación optimizada para redes sociales, broadcast, web y plataformas.</p></div>
+  </div>
+</section>
+
+<section id="sobre-mi">
+  <div class="about-inner">
+    <div class="about-text">
+      <p class="section-label">Sobre mí 🧑‍💻</p>
+      <h2 class="section-title">Hola, soy Crene :)</h2>
+      </h3>Soy editor y motion designer de Argentina,
+         tengo 26 años y me apasiona la edición</h3>
+      <p></p>
+          <p>Me interesa que cada pieza tenga un ritmo propio y comunique algo real.</p>
+      <p>Trabaje con empresas,creadores de contenido y proyectos independientes, desde spots explicativos hasta contenido para redes y piezas de branding en movimiento.</p>
+      
+    </div>
+    <div class="about-stats">
+      <div class="stat"><span class="stat-number" id="stat-projects">0</span><span class="stat-label">Proyectos en este portfolio</span></div>
+      <div class="stat"><span class="stat-number">3+</span><span class="stat-label">Años de experiencia</span></div>
+      <div class="stat"><span class="stat-number">Ae</span><span class="stat-label" style="color:var(--ae)">After Effects</span></div>
+      <div class="stat"><span class="stat-number">Pr</span><span class="stat-label" style="color:var(--pr)">Premiere Pro</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contact-box">
+    <p class="section-label">Contacto</p>
+    <h2 class="section-title">¿Tenés un proyecto?</h2>
+    <p>Contame qué necesitás y vemos cómo darle forma. Estoy disponible para proyectos freelance, colaboraciones y trabajos a largo plazo.</p>
+    <div class="contact-links">
+      <a href="mailto:alejosanchezoc@gmail.com" class="contact-btn">✉️ Email</a>
+      <a href="https://instagram.com/alejooosz" target="_blank" class="contact-btn">📸 Instagram</a>
+      <a href="https://tiktok.com/@crenezzo" target="_blank" class="contact-btn">🎞️ Tiktok</a>
+      <a href="https://twitch.tv/crenezzo" target="_blank" class="contact-btn">🎬 Twitch</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Crene · Motion Design & Video Editing</p>
+  <p style="color:var(--muted);font-size:0.72rem">Hecho con After Effects, Premiere Pro y mucho Mate.</p>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-media" id="modal-media"></div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <div>
+          <div class="modal-title" id="modal-title"></div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:4px" id="modal-meta-info"></div>
+        </div>
+        <button class="modal-close" onclick="closeModalBtn()">Cerrar ✕</button>
+      </div>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let projects = [];
+  try { projects = JSON.parse(localStorage.getItem('pf-v2') || '[]'); } catch(e) {}
+
+  const toolConfig = {
+    'After Effects': { cls: 'tag-ae', color: 'var(--ae)' },
+    'Premiere Pro':  { cls: 'tag-pr', color: 'var(--pr)' },
+    'Ambas':         { cls: 'tag-v',  color: 'var(--accent2)' },
+    'Motion':        { cls: 'tag-v',  color: 'var(--accent2)' },
+  };
+
+  function extractVimeoId(url) {
+    if (!url) return null;
+    const m = url.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/);
+    return m ? m[1] : null;
+  }
+
+  function embedUrl(id, autoplay) {
+    return 'https://player.vimeo.com/video/' + id + '?badge=0&player_id=0&app_id=58479' + (autoplay ? '&autoplay=1' : '');
+  }
+
+  function thumbUrl(id) {
+    return 'https://vumbnail.com/' + id + '.jpg';
+  }
+
+  function toggleForm() {
+    const f = document.getElementById('project-form');
+    if (f.classList.contains('visible')) { cancelForm(); return; }
+    f.classList.add('visible');
+    document.getElementById('f-year').value = new Date().getFullYear();
+    setTimeout(() => f.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+  }
+
+  function cancelForm() {
+    document.getElementById('project-form').classList.remove('visible');
+    ['f-url','f-title','f-desc','f-client'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('vimeo-preview').style.display = 'none';
+    document.getElementById('vimeo-iframe').src = '';
+  }
+
+  let pvTimeout;
+  function previewVimeo() {
+    clearTimeout(pvTimeout);
+    pvTimeout = setTimeout(() => {
+      const id = extractVimeoId(document.getElementById('f-url').value.trim());
+      const preview = document.getElementById('vimeo-preview');
+      const iframe = document.getElementById('vimeo-iframe');
+      if (id) { iframe.src = embedUrl(id, false); preview.style.display = 'block'; }
+      else { preview.style.display = 'none'; iframe.src = ''; }
+    }, 700);
+  }
+
+  function saveProject() {
+    const url = document.getElementById('f-url').value.trim();
+    const id = extractVimeoId(url);
+    if (!id) { alert('Por favor ingresá un link de Vimeo válido.\nEjemplo: https://vimeo.com/123456789'); return; }
+    const p = {
+      id: Date.now(),
+      title:  document.getElementById('f-title').value.trim() || 'Sin título',
+      tool:   document.getElementById('f-tool').value,
+      year:   document.getElementById('f-year').value.trim() || new Date().getFullYear(),
+      client: document.getElementById('f-client').value.trim(),
+      desc:   document.getElementById('f-desc').value.trim(),
+      vimeoId: id
+    };
+    projects.unshift(p);
+    persist();
+    renderProjects();
+    cancelForm();
+  }
+
+  function deleteProject(id, e) {
+    e.stopPropagation();
+    if (!confirm('¿Eliminar este proyecto?')) return;
+    projects = projects.filter(p => p.id !== id);
+    persist();
+    renderProjects();
+  }
+
+  function persist() {
+    try { localStorage.setItem('pf-v2', JSON.stringify(projects)); } catch(e) {}
+    document.getElementById('stat-projects').textContent = projects.length;
+  }
+
+  function renderProjects() {
+    const grid = document.getElementById('projects-grid');
+    grid.innerHTML = '';
+    if (!projects.length) {
+      grid.innerHTML = '<div class="empty-state"><span class="big-icon">🎬</span><h3>Tu portfolio te espera</h3><p>Agregá tu primer proyecto con un link de Vimeo.</p></div>';
+      document.getElementById('stat-projects').textContent = 0;
+      return;
+    }
+    projects.forEach(p => {
+      const cfg = toolConfig[p.tool] || toolConfig['Motion'];
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.innerHTML =
+        '<div class="card-media">' +
+          '<img src="' + thumbUrl(p.vimeoId) + '" alt="' + p.title + '" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" />' +
+          '<div class="card-placeholder" style="display:none">🎬</div>' +
+          '<div class="card-overlay"><div class="play-icon">&#9654;</div></div>' +
+          '<span class="card-type-badge ' + cfg.cls + '">' + p.tool + '</span>' +
+        '</div>' +
+        '<button class="card-delete" onclick="deleteProject(' + p.id + ', event)" title="Eliminar">✕</button>' +
+        '<div class="card-info">' +
+          '<h3>' + p.title + '</h3>' +
+          (p.desc ? '<p>' + p.desc.substring(0,90) + (p.desc.length>90?'…':'') + '</p>' : '') +
+          '<div class="card-meta">' +
+            '<span class="card-tool" style="color:' + cfg.color + '">' + p.tool + '</span>' +
+            '<span class="card-year">' + (p.client ? p.client + ' · ' : '') + p.year + '</span>' +
+          '</div>' +
+        '</div>';
+      card.addEventListener('click', () => openModal(p));
+      grid.appendChild(card);
+    });
+    document.getElementById('stat-projects').textContent = projects.length;
+  }
+
+  function openModal(p) {
+    document.getElementById('modal-media').innerHTML = '<iframe src="' + embedUrl(p.vimeoId, true) + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-meta-info').textContent = [p.tool, p.client, p.year].filter(Boolean).join(' · ');
+    document.getElementById('modal-desc').textContent = p.desc || '';
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModalBtn() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-media').innerHTML = '';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModalBtn();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+  renderProjects();
+</script>
+</body>
+</html>
